@@ -53,7 +53,9 @@ function append(entry) {
 
 function changedFiles(cwd) {
   try {
-    const out = execFileSync("git", ["status", "--porcelain"], {
+    // --untracked-files=all: default porcelain collapses untracked dirs to
+    // "dir/", hiding new .tsx files inside them from the filter below.
+    const out = execFileSync("git", ["status", "--porcelain", "--untracked-files=all"], {
       cwd,
       encoding: "utf8",
       timeout: 5000,

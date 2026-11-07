@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -51,6 +51,24 @@ test("bad existing lines are tolerated", () => {
   const lines = readFileSync(file, "utf8").trim().split("\n");
   assert.equal(lines.length, 2);
   assert.equal(JSON.parse(lines[1]).lesson, "ok");
+});
+
+test("hook captures frontend files inside untracked directories", () => {
+  const { file, runOnce } = run([]);
+  const repo = mkdtempSync(join(tmpdir(), "feedback-repo-"));
+  execFileSync("git", ["init", "-q"], { cwd: repo });
+  execFileSync("git", ["config", "user.email", "t@t.t"], { cwd: repo });
+  execFileSync("git", ["config", "user.name", "t"], { cwd: repo });
+  writeFileSync(join(repo, "seed.txt"), "x");
+  execFileSync("git", ["add", "."], { cwd: repo });
+  execFileSync("git", ["commit", "-qm", "init"], { cwd: repo });
+  // New route in a fully untracked dir: default porcelain shows only the dir.
+  mkdirSync(join(repo, "app", "(auth)", "login"), { recursive: true });
+  writeFileSync(join(repo, "app", "(auth)", "login", "login-form.tsx"), "x");
+  runOnce(["--hook"], JSON.stringify({ cwd: repo, hook_event_name: "Stop" }));
+  const rows = readFileSync(file, "utf8").trim().split("\n").map(JSON.parse);
+  assert.equal(rows.length, 1);
+  assert.deepEqual(rows[0].files, ["app/(auth)/login/login-form.tsx"]);
 });
 
 test("hook with no frontend changes writes nothing", () => {

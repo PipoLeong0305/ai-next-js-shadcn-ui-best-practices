@@ -1,6 +1,6 @@
 {
   "name": "nextjs-shadcn-best-practices",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Next.js App Router + shadcn/ui best practices: server-first pages, Field + useActionState forms, token-only styling, loading/error/empty states.",
   "author": {
     "name": "Pipo Leong",
@@ -18,7 +18,7 @@
     "longDescription": "Build and modify Next.js App Router frontends with shadcn/ui: folder structure, server-first data flow, Field + useActionState forms, token-only styling, and loading/error/empty states. The target project's own conventions override these defaults.",
     "developerName": "Pipo Leong",
     "category": "Productivity",
-    "capabilities": ["Instructions"],
+    "capabilities": ["Instructions", "Lifecycle hooks"],
     "websiteURL": "https://github.com/PipoLeong0305/ai-next-js-shadcn-ui-best-practices",
     "defaultPrompt": [
       "Use the nextjs-shadcn-best-practices skill to add a new page.",

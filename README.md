@@ -59,6 +59,23 @@ Use the nextjs-shadcn-best-practices skill to add a /projects page with a table,
 
 目标项目自己的 `AGENTS.md` / `CLAUDE.md`、`components.json`、`package.json` 里的约定（包管理器、版本、别名、语言、鉴权、表单栈）优先于本 skill 的通用默认值。
 
+## Self-improvement loop
+
+这个 skill 不会自己改自己。它的学习闭环是半自动的：
+
+1. **收集**：用主 skill 干活时，被你纠正或因违反规则导致 lint/build 失败，agent 会调 `scripts/log-feedback.mjs` 把教训记到本地 `~/.local/share/nextjs-shadcn-skill/feedback.jsonl`（可用 `SKILL_FEEDBACK_FILE` 改路径）。插件的 `Stop` hook 只记录改动过的前端文件清单做原始信号。其他使用者也可以用仓库的 skill-feedback Issue 模板回流。
+2. **复盘**：在本仓库里对任意 agent 说「用 nextjs-shadcn-improve 复盘 skill 反馈」。它读 Issue + 本地反馈，聚类计数，同类 ≥2 次（或单次严重失败）才提议入库；项目专属的教训会被分流回该项目，不进全局 skill。它只开 PR，不自动合并。
+3. **评测**：改稿前后跑 `claude plugin eval . --trust-plugin`（用例在 `evals/`：列表页、登录表单、暗色主题），分数写进 PR，没变好就不合并。
+4. **发布**：合并后同步 bump 两个 plugin manifest 的版本并 push。使用者在自己的 agent 里刷新 marketplace 并更新插件、开新会话即可。
+
+反馈只存本机，不自动上传；记录时不要写密钥和客户数据。
+
+手动记一条教训：
+
+```bash
+node scripts/log-feedback.mjs --lesson "<应该怎么做>" --evidence "<发生了什么>"
+```
+
 ## Layout
 
 ```text
@@ -75,4 +92,15 @@ skills/
     SKILL.md
     references/
       full-guide.md
+  nextjs-shadcn-improve/
+    SKILL.md
+hooks/
+  hooks.json
+scripts/
+  log-feedback.mjs
+  log-feedback.test.mjs
+evals/
+  list-page/
+  login-form/
+  dark-theme/
 ```

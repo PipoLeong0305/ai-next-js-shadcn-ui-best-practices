@@ -1,0 +1,21 @@
+{
+  "name": "nextjs-shadcn-best-practices",
+  "interface": {
+    "displayName": "Next.js + shadcn/ui Best Practices"
+  },
+  "plugins": [
+    {
+      "name": "nextjs-shadcn-best-practices",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/PipoLeong0305/ai-next-js-shadcn-ui-best-practices.git",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

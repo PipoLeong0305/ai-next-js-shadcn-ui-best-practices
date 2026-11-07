@@ -16,41 +16,34 @@ Next.js (App Router) + shadcn/ui 最佳实践，打包成一个跨 agent 的 [Ag
 
 ## Install
 
-把 `skills/nextjs-shadcn-best-practices/` 整个文件夹复制或软链到你的 agent 的 skill 发现目录。项目级放在目标项目根目录下，用户级放在 home 下。
+Claude Code, as two separate prompts:
+
+```text
+/plugin marketplace add PipoLeong0305/ai-next-js-shadcn-ui-best-practices
+```
+
+```text
+/plugin install nextjs-shadcn-best-practices@nextjs-shadcn-best-practices
+```
+
+Codex:
+
+```bash
+codex plugin marketplace add PipoLeong0305/ai-next-js-shadcn-ui-best-practices
+codex plugin add nextjs-shadcn-best-practices@nextjs-shadcn-best-practices
+```
+
+Other agents (manual):
+
+把 `skills/nextjs-shadcn-best-practices/` 整个文件夹复制到该 agent 的 skill 发现目录，例如 `.agents/skills/`（Muse、Codex、Cursor 等）或 `.claude/skills/`（Claude Code）：
 
 ```bash
 git clone git@github.com:PipoLeong0305/ai-next-js-shadcn-ui-best-practices.git
-cd ai-next-js-shadcn-ui-best-practices
-SKILL_DIR="$PWD/skills/nextjs-shadcn-best-practices"
-```
-
-| Agent | 项目级目录 | 用户级目录 |
-|---|---|---|
-| Muse / Codex / Cursor / Copilot 等支持 `.agents/skills` 的 agent | `<project>/.agents/skills/` | `~/.agents/skills/` |
-| Claude Code | `<project>/.claude/skills/` | `~/.claude/skills/` |
-| Muse | `<project>/.agents/skills/` | 用 `muse skills install <path>` 安装 |
-
-复制（以 `.agents/skills` 为例）：
-
-```bash
 mkdir -p <project>/.agents/skills
-cp -R "$SKILL_DIR" <project>/.agents/skills/
+cp -R ai-next-js-shadcn-ui-best-practices/skills/nextjs-shadcn-best-practices <project>/.agents/skills/
 ```
 
-或软链（改这个仓库即同步生效）：
-
-```bash
-mkdir -p <project>/.agents/skills
-ln -s "$SKILL_DIR" <project>/.agents/skills/nextjs-shadcn-best-practices
-```
-
-Claude Code 把上面路径中的 `.agents/skills` 换成 `.claude/skills` 即可。Muse 也可直接验证和检查：
-
-```bash
-muse skills validate skills/nextjs-shadcn-best-practices --json
-```
-
-各 agent 的发现目录以其当前官方文档为准；`SKILL.md` 本身只用了标准 frontmatter（`name` + `description`），不依赖任何单一厂商的扩展字段。
+`SKILL.md` 只用了标准 frontmatter（`name` + `description`），不依赖任何单一厂商的扩展字段；发现目录以各 agent 当前官方文档为准。
 
 ## Use
 
@@ -69,6 +62,14 @@ Use the nextjs-shadcn-best-practices skill to add a /projects page with a table,
 ## Layout
 
 ```text
+.claude-plugin/
+  marketplace.json
+  plugin.json
+.codex-plugin/
+  plugin.json
+.agents/
+  plugins/
+    marketplace.json
 skills/
   nextjs-shadcn-best-practices/
     SKILL.md

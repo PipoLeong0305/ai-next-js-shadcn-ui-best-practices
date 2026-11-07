@@ -1,0 +1,10 @@
+{
+  "name": "nextjs-shadcn-best-practices",
+  "version": "1.0.0",
+  "description": "Next.js App Router + shadcn/ui best practices: server-first pages, Field + useActionState forms, token-only styling, loading/error/empty states.",
+  "license": "MIT",
+  "author": {
+    "name": "Pipo Leong",
+    "url": "https://github.com/PipoLeong0305"
+  }
+}

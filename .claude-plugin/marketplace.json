@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "nextjs-shadcn-best-practices",
+  "description": "Next.js App Router + shadcn/ui best practices for AI coding agents.",
+  "owner": {
+    "name": "Pipo Leong",
+    "url": "https://github.com/PipoLeong0305"
+  },
+  "plugins": [
+    {
+      "name": "nextjs-shadcn-best-practices",
+      "description": "Build and modify Next.js App Router frontends with shadcn/ui: server-first pages, Field + useActionState forms, token-only styling, loading/error/empty states.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

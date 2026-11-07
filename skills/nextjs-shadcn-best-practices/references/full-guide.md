@@ -197,6 +197,20 @@ Compose with `cva` variants and `cn`; keep generated `data-slot` attributes inta
 ### 5.4 Forms and feedback
 
 - Structure follows the official `login-01` block: `Card` > `form` > `FieldGroup` > `Field` + `FieldLabel` + `Input`. Never hand-roll `Label` + `div` gaps when `Field` exists. (Only cite `react-hook-form`/`zod` if Project Context lists them; otherwise do not treat them as the default.)
+- Icons, text, or buttons inside an input use `InputGroup`, never a hand-rolled `relative` + `absolute` overlay on a plain `Input`. Hand positioning fights the button's own transforms (`active:translate-y-px` vs a centering `transform` on the same element), so alignment breaks on interaction. `InputGroup` is a flex container and the addon sits in normal flow:
+
+```tsx
+<InputGroup>
+  <InputGroupInput id="password" name="password" type={show ? "text" : "password"} autoComplete="current-password" disabled={pending} />
+  <InputGroupAddon align="inline-end">
+    <InputGroupButton aria-label={show ? "Hide password" : "Show password"} aria-pressed={show} onClick={() => setShow(!show)}>
+      {show ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+    </InputGroupButton>
+  </InputGroupAddon>
+</InputGroup>
+```
+
+Add it with the CLI (`<pkg> dlx shadcn@latest add input-group`); it depends on `input` and `textarea`. When unsure how any shadcn components compose, check the official docs or the registry JSON for the project's `style` from `components.json` (for example `https://ui.shadcn.com/r/styles/base-vega/login-01.json`) before writing the composition. ([InputGroup docs](https://ui.shadcn.com/docs/components/base/input-group))
 - Client actions use React `useActionState`: `const [state, formAction, pending] = useActionState(action, { error: "" })` with `<form action={formAction}>`. The action reads `formData.get("name")`, so every `Input` needs a `name` plus `autoComplete` (`email`, `current-password`) and `disabled={pending}`. No manual `onSubmit` + `preventDefault` + `isPending` state. ([Next forms guide](https://nextjs.org/docs/app/guides/forms))
 - Errors render via shared `ErrorText` (`text-sm text-destructive`, `role="alert"`). Never hardcode `text-red-600`. Pending disables submit: `<Button type="submit" disabled={pending}>`.
 - `Checkbox.onCheckedChange` receives `boolean | "indeterminate"` — narrow it (`(v) => setX(v === true)`), never pass the raw setter.

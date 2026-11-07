@@ -9,7 +9,7 @@ description: Build and modify Next.js App Router frontends with shadcn/ui, React
 
 1. Read the target project's own context first: its agent entry file (`AGENTS.md` / `CLAUDE.md` / Cursor rules), `components.json`, and `package.json`. Note package manager, Next/React/Tailwind versions, path aliases, UI language and `<html lang>`, auth strategy, and form stack.
 2. Project context overrides this skill. Where this skill says "do X" and the project says "here X means Y", follow the project.
-3. Confirm installed shadcn variants against the actual files in `components/ui/` (for example `button.tsx`); variants differ by template. Never assume a variant or prop exists.
+3. Confirm installed shadcn variants against the actual files in `components/ui/` (for example `button.tsx`); variants differ by template. Never assume a variant or prop exists. When unsure how components compose, check the official docs or registry source for the project's `style` in `components.json` (for example `base-vega`) before writing the composition.
 4. For the full rule set, read [references/full-guide.md](references/full-guide.md). This file is the quick path; the reference is authoritative when they differ in detail.
 
 ## Workflow
@@ -52,6 +52,7 @@ description: Build and modify Next.js App Router frontends with shadcn/ui, React
 ### Forms and feedback
 
 - Structure: `Card` > `form` > `FieldGroup` > `Field` + `FieldLabel` + `Input` (the official `login-01` block shape). Do not hand-roll label-plus-gap markup when `Field` exists.
+- Icons, text, or buttons inside an input: `InputGroup` > `InputGroupInput` + `InputGroupAddon align="inline-end"` > `InputGroupButton`, so the control stays in normal flex flow. Never hand-roll `relative` + `absolute` positioning around a plain `Input`.
 - Unless the project names another form stack, use React `useActionState`: `const [state, formAction, pending] = useActionState(action, { error: "" })` with `<form action={formAction}>`. Every `Input` gets a `name`, an `autoComplete`, and `disabled={pending}`. No manual `onSubmit` + `preventDefault` + pending state.
 - Errors use a shared error text style (`text-sm text-destructive`, `role="alert"`). Submit disables while pending.
 - `Checkbox.onCheckedChange` passes `boolean | "indeterminate"`; narrow it (`v === true`) before storing.

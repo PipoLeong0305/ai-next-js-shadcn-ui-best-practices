@@ -1,0 +1,42 @@
+name: Skill feedback
+description: Report a lesson for the nextjs-shadcn-best-practices skill (a correction, a repeated mistake, or a missing rule).
+title: "[skill-feedback] "
+labels: ["skill-feedback"]
+body:
+  - type: textarea
+    id: scene
+    attributes:
+      label: Scene
+      description: What were you asking the agent to do?
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What went wrong
+      description: Which skill rule was violated or missing? Do not paste secrets or customer data.
+    validations:
+      required: true
+  - type: textarea
+    id: correct
+    attributes:
+      label: Correct behavior
+      description: What should the agent do instead, in one generalizable sentence?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Lint/build output, a diff snippet, or how often this has happened.
+    validations:
+      required: false
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - Global (applies to any Next.js + shadcn/ui project)
+        - Project-only (specific to my repo's conventions)
+    validations:
+      required: true

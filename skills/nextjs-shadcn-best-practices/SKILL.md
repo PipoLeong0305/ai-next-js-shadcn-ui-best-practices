@@ -67,6 +67,16 @@ description: Build and modify Next.js App Router frontends with shadcn/ui, React
 - [ ] Primary section linked from shared nav
 - [ ] Lint and build pass
 
+## Record feedback
+
+When the user corrects you on a rule from this skill, or lint/build fails because a rule here was violated, record one lesson (one generalizable sentence, no secrets or customer data):
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:-.}}/scripts/log-feedback.mjs" --lesson "<what to do instead>" --evidence "<what happened>"
+```
+
+Add `--scope project-only` when the correction is specific to this repo's conventions; those lessons must not become global rules. If the script or plugin root is unavailable, skip silently and finish the task.
+
 ## Reference
 
 Full guide with folder-structure diagram, code examples, and rationale: [references/full-guide.md](references/full-guide.md).

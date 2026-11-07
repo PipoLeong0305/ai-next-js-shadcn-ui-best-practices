@@ -11,6 +11,7 @@
   "repository": "https://github.com/PipoLeong0305/ai-next-js-shadcn-ui-best-practices",
   "keywords": ["nextjs", "shadcn-ui", "react", "tailwindcss", "frontend"],
   "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "Next.js + shadcn/ui Best Practices",
     "shortDescription": "App Router + shadcn/ui frontend conventions",
